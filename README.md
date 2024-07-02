@@ -1,8 +1,11 @@
 # exchangerate
+Execute a aplicacao ./mvnw quarkus:dev
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Para testar a aplicação pode utilizar o Swagger: http://localhost:8080/swagger-ui/
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+## A Aplicação tem 2 endpoints
+- O Principal que faz a conversão
+- O secundario que consulta o banco de dados
 
 ## Docker
 Para gerar uma tag do projeto use o comando abaixo:

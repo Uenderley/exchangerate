@@ -20,7 +20,6 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 @Consumes(MediaType.APPLICATION_JSON)
 @Slf4j
 public class ExchangeResource {
-
     @Inject
     ExchangeService exchangeService;
 
