@@ -33,7 +33,9 @@ public class ExchangeResource {
     public Response converterMoeda( @RequestBody(required = true,
             content = @Content(schema = @Schema(implementation = ExchangeRateRequestDTO.class)))
                                         @Valid ExchangeRateRequestDTO parMoedasRequest) {
+        log.info("Recebendo os par de moedas {} {}", parMoedasRequest.getMoedaOrigem(), parMoedasRequest.getMoedaDestino());
         var response = exchangeService.converterMoeda(parMoedasRequest);
+        log.info("Respondendo ao usuario");
         return Response.ok().entity(response).build();
     }
 

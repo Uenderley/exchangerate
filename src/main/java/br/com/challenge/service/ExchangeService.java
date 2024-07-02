@@ -31,6 +31,7 @@ public class ExchangeService {
 
     @Transactional
     public ExchangeRateResponseDTO converterMoeda(ExchangeRateRequestDTO exchangeRateRequestDTO) {
+        log.info("Iniciando a Requisicao no endpoint");
         var resp = exchangeRestClient.getExchangeRate(apiKey,
                 exchangeRateRequestDTO.getMoedaOrigem(), exchangeRateRequestDTO.getMoedaDestino());
 
@@ -39,11 +40,11 @@ public class ExchangeService {
                 .moedaOrigem(exchangeRateRequestDTO.getMoedaOrigem())
                 .dtConsulta(LocalDateTime.now()).build();
 
+        log.info("Persistindo os dados");
         moedaRepository.persist(moedaEntity);
 
         return resp;
     }
-
 
     public List<MoedaEntity> consultarHistorico() {
         return moedaRepository.findAll().list();
