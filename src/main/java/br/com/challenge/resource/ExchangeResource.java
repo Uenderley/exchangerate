@@ -4,10 +4,7 @@ import br.com.challenge.model.ExchangeRateRequestDTO;
 import br.com.challenge.service.ExchangeService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -39,5 +36,18 @@ public class ExchangeResource {
         var response = exchangeService.converterMoeda(parMoedasRequest);
         return Response.ok().entity(response).build();
     }
+
+    @GET
+    @Path("/historico")
+    @Operation(summary = "Consulta todo o banco de dados",
+            description = "Verificar os dados armazenados no H2")
+    @APIResponse(responseCode = "200", description = "Sucesso",
+            content = @Content(schema = @Schema(implementation = ExchangeRateRequestDTO.class)))
+    public Response consultarHistorico() {
+        var response = exchangeService.consultarHistorico();
+        return Response.ok().entity(response).build();
+    }
+
+
 }
 
