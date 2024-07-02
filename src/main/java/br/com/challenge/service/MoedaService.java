@@ -1,8 +1,8 @@
 package br.com.challenge.service;
 
 import br.com.challenge.model.ExchangeRateRequestDTO;
-import br.com.challenge.model.ExchangeRateResponseDTO;
 import br.com.challenge.model.MoedaEntity;
+import br.com.challenge.model.MoedaResponseDTO;
 import br.com.challenge.repository.MoedaRepository;
 import br.com.challenge.rest.ExchangeRestClient;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @Slf4j
 @ApplicationScoped
-public class ExchangeService {
+public class MoedaService {
 
     @ConfigProperty(name = "exchangerate.api.key")
     String apiKey;
@@ -30,7 +30,7 @@ public class ExchangeService {
     MoedaRepository moedaRepository;
 
     @Transactional
-    public ExchangeRateResponseDTO converterMoeda(ExchangeRateRequestDTO exchangeRateRequestDTO) {
+    public MoedaResponseDTO converterMoeda(ExchangeRateRequestDTO exchangeRateRequestDTO) {
         log.info("Iniciando a Requisicao no endpoint");
         var resp = exchangeRestClient.getExchangeRate(apiKey,
                 exchangeRateRequestDTO.getMoedaOrigem(), exchangeRateRequestDTO.getMoedaDestino());
@@ -43,7 +43,10 @@ public class ExchangeService {
         log.info("Persistindo os dados");
         moedaRepository.persist(moedaEntity);
 
-        return resp;
+        return MoedaResponseDTO.builder()
+                .moedaOrigem(exchangeRateRequestDTO.getMoedaOrigem())
+                .moedaDestino(exchangeRateRequestDTO.getMoedaDestino())
+                .taxaConversao(resp.getConversionRate()).build();
     }
 
     public List<MoedaEntity> consultarHistorico() {

@@ -1,7 +1,7 @@
 package br.com.challenge.resource;
 
 import br.com.challenge.model.ExchangeRateRequestDTO;
-import br.com.challenge.service.ExchangeService;
+import br.com.challenge.service.MoedaService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -19,9 +19,9 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Slf4j
-public class ExchangeResource {
+public class MoedaResource {
     @Inject
-    ExchangeService exchangeService;
+    MoedaService exchangeService;
 
     @POST
     @Path("/converter/moeda")

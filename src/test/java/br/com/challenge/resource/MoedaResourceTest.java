@@ -1,8 +1,8 @@
 package br.com.challenge.resource;
 
 import br.com.challenge.model.ExchangeRateRequestDTO;
-import br.com.challenge.model.ExchangeRateResponseDTO;
-import br.com.challenge.service.ExchangeService;
+import br.com.challenge.model.MoedaResponseDTO;
+import br.com.challenge.service.MoedaService;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
@@ -14,13 +14,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @QuarkusTest
-class ExchangeResourceTest {
+class MoedaResourceTest {
     @InjectMock
-    ExchangeService exchangeService;
+    MoedaService exchangeService;
 
     @Test
-    void testHelloEndpoint() {
-        var resp = ExchangeRateResponseDTO.builder().conversionRate(0.5).build();
+    void testSucesso() {
+        var resp = MoedaResponseDTO.builder().taxaConversao(0.5).build();
 
         when(exchangeService.converterMoeda(any(ExchangeRateRequestDTO.class)))
                 .thenReturn(resp);
@@ -32,7 +32,7 @@ class ExchangeResourceTest {
           .when().post("/exchange/converter/moeda")
           .then()
              .statusCode(200)
-             .body("conversion_rate", equalTo(0.5F));
+             .body("taxaConversao", equalTo(0.5F));
     }
 
     @Test
