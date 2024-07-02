@@ -1,4 +1,4 @@
-package br.com.challenge;
+package br.com.challenge.resource;
 
 import br.com.challenge.model.ExchangeRateRequestDTO;
 import br.com.challenge.model.ExchangeRateResponseDTO;
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -36,4 +35,21 @@ class ExchangeResourceTest {
              .body("conversion_rate", equalTo(0.5F));
     }
 
+    @Test
+    void testConverterMoedaRuntimeException() {
+        ExchangeRateRequestDTO requestDTO = new ExchangeRateRequestDTO();
+        requestDTO.setMoedaOrigem("USD");
+        requestDTO.setMoedaDestino("BRL");
+
+        when(exchangeService.converterMoeda(any(ExchangeRateRequestDTO.class)))
+                .thenThrow(new RuntimeException("Erro ao converter moedas"));
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(requestDTO)
+                .when()
+                .post("/exchange/converter/moeda")
+                .then()
+                .statusCode(500);
+    }
 }
