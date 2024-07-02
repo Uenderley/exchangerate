@@ -1,9 +1,15 @@
 package br.com.challenge.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ExchangeRateResponseDTO {
     @JsonProperty("result")
     private String result;
